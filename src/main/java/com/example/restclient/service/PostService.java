@@ -1,8 +1,10 @@
 package com.example.restclient.service;
 
+import com.example.restclient.exception.PostNotFoundException;
 import com.example.restclient.model.Post;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
@@ -30,6 +32,9 @@ public class PostService {
         return restClient.get()
                 .uri("/posts/{id}", id)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, (request,response) -> {
+                    throw new PostNotFoundException(response.getStatusText());
+                })
                 .body(Post.class);
     }
 }
