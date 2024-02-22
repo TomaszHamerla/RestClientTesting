@@ -42,4 +42,17 @@ class PostServiceTest {
         assertEquals(data.getFirst(),result.getFirst());
     }
 
+    @Test
+    void shouldFindPostById() throws JsonProcessingException {
+        //given
+        Post data = new Post(1,1,"title1","body1");
+        //when
+        server.expect(requestTo("https://jsonplaceholder.typicode.com/posts/1"))
+                .andRespond(withSuccess(objectMapper.writeValueAsString(data), MediaType.APPLICATION_JSON));
+
+        //then
+        var result = service.findById(1);
+        assertEquals(data,result);
+    }
+
 }
