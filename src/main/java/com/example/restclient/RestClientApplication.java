@@ -12,11 +12,14 @@ public class RestClientApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestClientApplication.class, args);
     }
-    @Bean
-    public CommandLineRunner run(PostService postService) {
-        return args -> {
-            postService.findAll().forEach(System.out::println);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner run(PostService service){
+//        return args -> {
+//            for (int i = 1; i <= 100; i++) {
+//                System.out.println(service.findById(i));
+//                System.out.println("==================================\n\n\n");
+//            }
+//        };
+//    }
 
 }
